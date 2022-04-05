@@ -1,0 +1,6 @@
+s(T, [the, young, boy, pushed, and, stored, a, big, box, in, the, large, empty, room, after, school], []).
+s(T, [the, old, woman, and, the, old, man, gave, the, poor, young, man, a, white, envelope, in, the, shed, behind, the, building], []).
+s(T, [every, boy, quickly, climbed, some, big, tree, and, every, girl, watched, some, boy, whom, she, liked], []).
+s(T, [some, brilliant, students, and, many, professors, watched, and, admired, talented, lecturers, and, appreciated, bright, scientists, and, researchers], []).
+s(T, [who, climbed, the, big, tree], []).
+s(T, [what, did, professors, do], []).

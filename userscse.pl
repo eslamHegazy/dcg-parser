@@ -1,0 +1,15 @@
+sentence(sentence(X,Y)) -->
+   noun_phrase(X), verb_phrase(Y).
+
+noun_phrase(noun_phrase(X,Y)) -->
+   determiner(X), noun(Y).
+
+verb_phrase(verb_phrase(X,Y)) -->
+   verb(X), noun_phrase(Y).
+
+determiner(determiner(the)) --> [the].
+determiner(determiner(a)) --> [a].
+noun(noun(mouse)) --> [mouse].
+noun(noun(cat)) --> [cat].
+verb(verb(hate)) --> [hated].
+verb(verb(scare)) --> [scared].
