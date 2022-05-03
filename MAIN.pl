@@ -7,6 +7,16 @@ ss(s(NP, VP)) --> anp(NP), bvp(VP).
 s(S) --> ss(S).
 s(s(S1, prop(and), S2)) --> ss(S1), [and], ss(S2).
 
+%s(subject_question(interr_pr(who), verb_phrase(verb(..),...))).
+%s(s(IP, VP)) --> whoq(IP), vp(VP).
+s(s(SQ)) --> sq(SQ).
+s(s(OQ)) --> oq(OQ).
+
+sq(subject_question(IP, VP)) --> ip(IP), vp(VP).
+oq(object_question(IP, FVP)) --> ip(IP), fvp(FVP).
+
+fvp(flipped_verb_phrase(AV, NP, IV)) --> av(AV), np(NP), iv(IV).
+%s(s(IP, AV, NP, IV)) --> whq(IP), av(MV), np(NP), iv(IV).
 
 anp(anded_noun_phrase(NP1, prop(and), NP2)) --> np(NP1), [and], np(NP2).
 
@@ -27,6 +37,7 @@ oph(object_phrase(NP)) --> anp(NP).
 
 rc(rel_clause(W, NP, VP)) --> obp(W), np(NP), vp(VP).
 
+% base verb phrase
 bvp(VP) --> avp(VP).
 bvp(VP) --> vp(VP).
 
@@ -72,69 +83,8 @@ pp(compound_prop_phrase(P1, NP1, P2, NP2)) -->
 	prop(P1), np(NP1), prop(P2), np(NP2). %TODO: anp?
 
 
-
-s(s(WHO, VP)) --> whoq(WHO), vp(VP).
-whoq(interrogative_pronoun(who)) --> [who].
-
-s(s(WHAT, MV, NP, IV)) --> whq(WHAT), mv(MV), np(NP), iv(IV).
-whq(interrogative_pronoun(what)) --> [what].
-
-%at least five determiners
-det(det(the)) --> [the].
-det(det(a)) --> [a].
-det(det(some)) --> [some].
-det(det(every)) --> [every].
-det(det(many)) --> [many].
-
-
-
-%at least twenty verbs with past tense or infinitve inflection
-mv(modal_verb(did)) --> [did].
-
-iv(infinitve_verb(do)) --> [do].
-v(verb(climbed)) --> [climbed].
-v(verb(pushed)) --> [pushed].
-v(verb(liked)) --> [liked].
-v(verb(stored)) --> [stored].
-v(verb(gave)) --> [gave].
-v(verb(watched)) --> [watched].
-v(verb(admired)) --> [admired].
-v(verb(appreciated)) --> [appreciated].
-
-%at least twenty adjectives
-adj(adjective(young)) --> [young].
-adj(adjective(big)) --> [big].
-adj(adjective(large)) --> [large].
-adj(adjective(empty)) --> [empty].
-adj(adjective(old)) --> [old].
-adj(adjective(poor)) --> [poor].
-adj(adjective(white)) --> [white].
-adj(adjective(brilliant)) --> [brilliant].
-adj(adjective(talented)) --> [talented].
-adj(adjective(bright)) --> [bright].
-adj(adjective(black)) --> [black].
-adj(adjective(green)) --> [green].
-adj(adjective(yellow)) --> [yellow].
-adj(adjective(small)) --> [small].
-adj(adjective(tiny)) --> [tiny].
-adj(adjective(ambitious)) --> [ambitious].
-adj(adjective(interested)) --> [interested].
-adj(adjective(exciting)) --> [exciting].
-adj(adjective(good)) --> [good].
-
-%at least ten adverbs
 adv_ph(adv_phrase(A)) --> adv(A).
 adv_ph(A1, prop(and), A2) --> adv(A1), [and], adv(A2), {A1\==A2}.
-adv(adverb(quickly)) --> [quickly].
-
-%at least ten propositions
-prop(proposition(after)) --> [after].
-prop(proposition(in)) --> [in].
-prop(proposition(behind)) --> [behind].
-
-
-obp(object_pronoun(whom)) --> [whom].
-sp(subject_pronoun(she)) --> [she].
 
 
 
@@ -165,3 +115,107 @@ n(singular, noun(scientist)) --> [scientist].
 n(singular, noun(researcher)) --> [researcher].
 
 n(x, noun(school)) --> [school].
+
+
+%at least twenty verbs with past tense or infinitve inflection
+av(auxiliary_verb(did)) --> [did].
+av(auxiliary_verb(can)) --> [can].
+av(auxiliary_verb(should)) --> [should].
+
+v(verb(climbed)) --> [climbed].
+v(verb(pushed)) --> [pushed].
+v(verb(liked)) --> [liked].
+v(verb(stored)) --> [stored].
+v(verb(gave)) --> [gave].
+v(verb(watched)) --> [watched].
+v(verb(admired)) --> [admired].
+v(verb(appreciated)) --> [appreciated].
+
+v(verb(fought)) --> [fought].
+v(verb(loved)) --> [loved].
+v(verb(saw)) --> [saw].
+v(verb(heard)) --> [heard].
+v(verb(noticed)) --> [noticed].
+
+iv(infinitve_verb(do)) --> [do].
+iv(infinitve_verb(climb)) --> [climb].
+iv(infinitve_verb(push)) --> [push].
+iv(infinitve_verb(like)) --> [like].
+iv(infinitve_verb(store)) --> [store].
+iv(infinitve_verb(girl)) --> [give].
+iv(infinitve_verb(watch)) --> [watch].
+iv(infinitve_verb(admire)) --> [admire].
+iv(infinitve_verb(appreciate)) --> [appreciate].
+
+
+%at least twenty adjectives
+adj(adjective(young)) --> [young].
+adj(adjective(big)) --> [big].
+adj(adjective(large)) --> [large].
+adj(adjective(empty)) --> [empty].
+adj(adjective(old)) --> [old].
+adj(adjective(poor)) --> [poor].
+adj(adjective(white)) --> [white].
+adj(adjective(brilliant)) --> [brilliant].
+adj(adjective(talented)) --> [talented].
+adj(adjective(bright)) --> [bright].
+
+adj(adjective(black)) --> [black].
+adj(adjective(green)) --> [green].
+adj(adjective(yellow)) --> [yellow].
+adj(adjective(small)) --> [small].
+adj(adjective(tiny)) --> [tiny].
+adj(adjective(ambitious)) --> [ambitious].
+adj(adjective(interested)) --> [interested].
+adj(adjective(exciting)) --> [exciting].
+adj(adjective(good)) --> [good].
+adj(adjective(fantastic)) --> [fantastic].
+
+
+%at least ten adverbs
+adv(adverb(quickly)) --> [quickly].
+adv(adverb(easily)) --> [easily].
+adv(adverb(early)) --> [early].
+adv(adverb(simply)) --> [simply].
+adv(adverb(normally)) --> [normally].
+adv(adverb(extremely)) --> [extremely].
+adv(adverb(slowly)) --> [slowly].
+adv(adverb(recently)) --> [recently].
+adv(adverb(carefully)) --> [carefully].
+adv(adverb(usually)) --> [usually].
+adv(adverb(really)) --> [really].
+adv(adverb(actually)) --> [actually].
+adv(adverb(probably)) --> [probably].
+adv(adverb(directly)) --> [directly].
+
+
+%at least ten propositions
+prop(proposition(after)) --> [after].
+prop(proposition(in)) --> [in].
+prop(proposition(behind)) --> [behind].
+
+prop(proposition(before)) --> [before].
+prop(proposition(during)) --> [during].
+
+prop(proposition(at)) --> [at].
+prop(proposition(on)) --> [on].
+prop(proposition(to)) --> [to].
+
+prop(proposition(with)) --> [with].
+prop(proposition(without)) --> [without].
+
+
+%at least five determiners
+det(det(the)) --> [the].
+det(det(a)) --> [a].
+det(det(some)) --> [some].
+det(det(every)) --> [every].
+det(det(many)) --> [many].
+
+
+%the object pronoun “whom”, and the interrogative pronouns “who” and “what”.
+obp(object_pronoun(whom)) --> [whom].
+sp(subject_pronoun(she)) --> [she].
+
+ip(interrogative_pronoun(who)) --> [who].
+ip(interrogative_pronoun(what)) --> [what].
