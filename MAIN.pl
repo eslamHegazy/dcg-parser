@@ -1,24 +1,19 @@
-%before arrow for parse tree
-%after arrow for actual sentence
+s(S) --> ss(S).
+s(s(S1, conjunction(and), S2)) --> ss(S1), [and], ss(S2).
 ss(s(NP, VP)) --> np(NP), bvp(VP).
 ss(s(NP, VP)) --> anp(NP), bvp(VP).
-%s(s(NP, VP, RC)) --> np(NP), bvp(VP), rc(RC).
-%s(s(NP, VP, RC)) --> anp(NP), bvp(VP), rc(RC).
-s(S) --> ss(S).
-s(s(S1, prop(and), S2)) --> ss(S1), [and], ss(S2).
 
-%s(subject_question(interr_pr(who), verb_phrase(verb(..),...))).
-%s(s(IP, VP)) --> whoq(IP), vp(VP).
+
 s(s(SQ)) --> sq(SQ).
 s(s(OQ)) --> oq(OQ).
 
 sq(subject_question(IP, VP)) --> ip(IP), vp(VP).
-oq(object_question(IP, FVP)) --> ip(IP), fvp(FVP).
+oq(object_question(IP, FVP)) --> ip(IP), qp(FVP).
 
-fvp(flipped_verb_phrase(AV, NP, IV)) --> av(AV), np(NP), iv(IV).
-%s(s(IP, AV, NP, IV)) --> whq(IP), av(MV), np(NP), iv(IV).
+qp(question_phrase(AV, NP, IV)) --> av(AV), np(NP), iv(IV).
+qp(question_phrase(AV, NP, IV)) --> av(AV), anp(NP), iv(IV).
 
-anp(anded_noun_phrase(NP1, prop(and), NP2)) --> np(NP1), [and], np(NP2).
+anp(anded_noun_phrase(NP1, conjunction(and), NP2)) --> np(NP1), [and], np(NP2).
 
 
 np(noun_phrase(P)) --> sp(P).
@@ -41,7 +36,7 @@ rc(rel_clause(W, NP, VP)) --> obp(W), np(NP), vp(VP).
 bvp(VP) --> avp(VP).
 bvp(VP) --> vp(VP).
 
-avp(anded_verb_phrase(VP1, prop(and), VP2)) --> vp(VP1), [and], vp(VP2).
+avp(anded_verb_phrase(VP1, conjunction(and), VP2)) --> vp(VP1), [and], vp(VP2).
 
 vp(verb_phrase(V)) --> v(V).
 vp(verb_phrase(V, NP)) --> v(V), oph(NP).
@@ -57,19 +52,19 @@ vp(verb_phrase(A, V, NP, P)) --> adv(A), v(V), oph(NP), pp(P).
 vp(verb_phrase(A, V, NP1, NP2, P)) --> adv(A), v(V), oph(NP1), oph(NP2), pp(P).
 
 
-vp(verb_phrase(V1, prop(and), V2)) --> v(V1), [and], v(V2), {V1\==V2}.
-vp(verb_phrase(V1, prop(and), V2, NP)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP).
-vp(verb_phrase(V1, prop(and), V2, NP1, NP2)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2).
-vp(verb_phrase(V1, prop(and), V2, P)) --> v(V1), [and], v(V2), {V1\==V2}, pp(P).
-vp(verb_phrase(V1, prop(and), V2, NP, P)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP), pp(P).
-vp(verb_phrase(V1, prop(and), V2, NP1, NP2, P)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2), pp(P).
+vp(verb_phrase(V1, conjunction(and), V2)) --> v(V1), [and], v(V2), {V1\==V2}.
+vp(verb_phrase(V1, conjunction(and), V2, NP)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP).
+vp(verb_phrase(V1, conjunction(and), V2, NP1, NP2)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2).
+vp(verb_phrase(V1, conjunction(and), V2, P)) --> v(V1), [and], v(V2), {V1\==V2}, pp(P).
+vp(verb_phrase(V1, conjunction(and), V2, NP, P)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP), pp(P).
+vp(verb_phrase(V1, conjunction(and), V2, NP1, NP2, P)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2), pp(P).
 
-vp(verb_phrase(A, V1, prop(and), V2)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}.
-vp(verb_phrase(A, V1, prop(and), V2, NP)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP).
-vp(verb_phrase(A, V1, prop(and), V2, NP1, NP2)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2).
-vp(verb_phrase(A, V1, prop(and), V2, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, pp(P).
-vp(verb_phrase(A, V1, prop(and), V2, NP, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP), pp(P).
-vp(verb_phrase(A, V1, prop(and), V2, NP1, NP2, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2), pp(P).
+vp(verb_phrase(A, V1, conjunction(and), V2)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}.
+vp(verb_phrase(A, V1, conjunction(and), V2, NP)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP).
+vp(verb_phrase(A, V1, conjunction(and), V2, NP1, NP2)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2).
+vp(verb_phrase(A, V1, conjunction(and), V2, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, pp(P).
+vp(verb_phrase(A, V1, conjunction(and), V2, NP, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP), pp(P).
+vp(verb_phrase(A, V1, conjunction(and), V2, NP1, NP2, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2), pp(P).
 
 
 %pp(prop_phrase(P, NP)) --> prop(P), np(NP). %TODO: anp?
@@ -84,8 +79,7 @@ pp(compound_prop_phrase(P1, NP1, P2, NP2)) -->
 
 
 adv_ph(adv_phrase(A)) --> adv(A).
-adv_ph(A1, prop(and), A2) --> adv(A1), [and], adv(A2), {A1\==A2}.
-
+adv_ph(A1, conjunction(and), A2) --> adv(A1), [and], adv(A2), {A1\==A2}.
 
 
 %at least tweny nouns
