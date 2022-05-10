@@ -1,6 +1,6 @@
 s(S) --> ss(S).
 s(s(S1, conjunction(and), S2)) --> ss(S1), [and], ss(S2).
-ss(s(NP, VP)) --> (np(NP);snp(NP)), bvp(VP).
+ss(s(NP, VP)) --> np(NP), bvp(VP).
 ss(s(NP, VP)) --> anp(NP), bvp(VP).
 
 
@@ -10,20 +10,18 @@ s(s(OQ)) --> oq(OQ).
 sq(subject_question(IP, VP)) --> ip(IP), vp(VP).
 oq(object_question(IP, FVP)) --> ip(IP), qp(FVP).
 
-qp(question_phrase(AV, NP, IV)) --> av(AV), (np(NP);snp(NP)), iv(IV) ; av(AV), anp(NP), iv(IV).
-%qp(question_phrase(AV, NP, IV)) --> av(AV), anp(NP), iv(IV).
+qp(question_phrase(AV, NP, IV)) --> av(AV), np(NP), iv(IV).
+qp(question_phrase(AV, NP, IV)) --> av(AV), anp(NP), iv(IV).
 
 anp(anded_noun_phrase(NP1, conjunction(and), NP2)) --> np(NP1), [and], np(NP2).
 
 
-np_(noun_phrase(P)) --> sp(P).
-
-np(noun_phrase(D, N)) --> det(X, D), n(X, N).
-np(noun_phrase(D, A, N)) --> det(X, D), adj(A), n(X, N).
-np(noun_phrase(D, A1, A2, N)) --> det(X, D), adj(A1), adj(A2), n(X, N), {A1\==A2}.
-
+np(noun_phrase(P)) --> sp(P).
+np(noun_phrase(D, N)) --> det(D), n(_, N).
+np(noun_phrase(D, A, N)) --> det(D), adj(A), n(_, N).
+np(noun_phrase(D, A1, A2, N)) --> det(D), adj(A1), adj(A2), n(_, N), {A1\==A2}.
 np(noun_phrase(N)) --> n(plural, N).
-np(noun_phrase(N)) --> n(uncountable, N).
+np(noun_phrase(N)) --> n(x, N).
 np(noun_phrase(A, N)) --> adj(A), n(plural, N).
 np(noun_phrase(A1, A2, N)) --> adj(A1), adj(A2), n(plural, N), {A1\==A2}.
 
@@ -75,6 +73,7 @@ vp(verb_phrase(A, V1, conjunction(and), V2, NP1, NP2, P)) --> adv(A), v(V1), [an
 %spp(P, NP) --> prop(P), n(_, NP).
 
 pp(prop_phrase(P, NP)) --> prop(P), np(NP).
+pp(c_prop_phrase(P, NP)) --> prop(P), np(NP).
 pp(compound_prop_phrase(P1, NP1, P2, NP2)) --> 
 	prop(P1), np(NP1), prop(P2), np(NP2). %TODO: anp?
 
@@ -88,7 +87,6 @@ n(singular, noun(boy)) --> [boy].
 n(singular, noun(box)) --> [box].
 n(singular, noun(room)) --> [room].
 n(singular, noun(school)) --> [school].
-n(uncountable, noun(school)) --> [school].
 n(singular, noun(woman)) --> [woman].
 
 n(singular, noun(man)) --> [man].
@@ -110,11 +108,10 @@ n(singular, noun(lecturer)) --> [lecturer].
 n(singular, noun(scientist)) --> [scientist].
 n(singular, noun(researcher)) --> [researcher].
 
-
+n(x, noun(school)) --> [school].
 
 
 %at least twenty verbs with past tense or infinitve inflection
-% Here: 3 auxiliary verbs + 13 past verbs + 9 infinitve_verbs = 25 verbs > 20
 av(auxiliary_verb(did)) --> [did].
 av(auxiliary_verb(can)) --> [can].
 av(auxiliary_verb(should)) --> [should].
@@ -203,14 +200,11 @@ prop(proposition(without)) --> [without].
 
 
 %at least five determiners
-% [the, a, some, every, many]
-det(singular, det(the)) --> [the].
-det(plural, det(the)) --> [the].
-det(singular, det(a)) --> [a].
-det(singular, det(some)) --> [some].
-det(plural, det(some)) --> [some].
-det(singular, det(every)) --> [every].
-det(plural, det(many)) --> [many].
+det(det(the)) --> [the].
+det(det(a)) --> [a].
+det(det(some)) --> [some].
+det(det(every)) --> [every].
+det(det(many)) --> [many].
 
 
 %the object pronoun “whom”, and the interrogative pronouns “who” and “what”.
