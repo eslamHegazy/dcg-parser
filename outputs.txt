@@ -1,79 +1,4 @@
-Sentence 1
-s(T, [the, young, boy, pushed, and, stored, a, big, box, in, the, large, empty, room, after, school], []).
-T = 
-s(
-	noun_phrase(
-		det(the), 
-		adjective(young), 
-		noun(boy)
-	), 
-	anded_verb_phrase(
-		verb_phrase(
-			verb(pushed)
-		), 
-		prop(and), 
-		verb_phrase(
-			verb(stored), 
-			object_phrase(
-				noun_phrase(
-					det(a), 
-					adjective(big), 
-					noun(box)
-				)
-			), 
-			compound_prop_phrase(
-				proposition(in), 
-				noun_phrase(
-					det(the), 
-					adjective(large), 
-					adjective(empty), 
-					noun(room)
-				), 
-				proposition(after), 
-				noun_phrase(noun(school))
-			)
-		)
-	)
-) ;
-
-
-T = 
-s(
-	noun_phrase(
-		det(the), 
-		adjective(young), 
-		noun(boy)
-	), 
-	verb_phrase(
-		verb(pushed), 
-		prop(and), 
-		verb(stored), 
-		object_phrase(
-			noun_phrase(
-				det(a), 
-				adjective(big), 
-				noun(box)
-			)
-		), 
-		compound_prop_phrase(
-			proposition(in), 
-			noun_phrase(
-				det(the), 
-				adjective(large), 
-				adjective(empty), 
-				noun(room)
-			), 
-			proposition(after), 
-			noun_phrase(
-				noun(school)
-			)
-		)
-	)
-) ;
-
-Sentence 2
-s(T, [the, old, woman, and, the, old, man, gave, the, poor, young, man, a, white, envelope, in, the, shed, behind, the, building], []).
-
+?- s(T, [the, old, woman, and, the, old, man, gave, the, poor, young, man, a, white, envelope, in, the, shed, behind, the, building], []).
 T = 
 s(
 	anded_noun_phrase(
@@ -82,7 +7,7 @@ s(
 			adjective(old), 
 			noun(woman)
 		), 
-		prop(and), 
+		conjunction(and), 
 		noun_phrase(
 			det(the), 
 			adjective(old), 
@@ -120,18 +45,142 @@ s(
 		)
 	)
 ) ;
+false.
 
-Sentence 3
-s(T, [every, boy, quickly, climbed, some, big, tree, and, every, girl, watched, some, boy, whom, she, liked], []).
+?- s(T, [the, young, boy, pushed, and, stored, a, big, box, in, the, large, empty, room, after, school], []).
+T = 
+s(
+	noun_phrase(
+		det(the), 
+		adjective(young), 
+		noun(boy)
+	), 
+	anded_verb_phrase(
+		verb_phrase(
+			verb(pushed)
+		), 
+		conjunction(and), 
+		verb_phrase(
+			verb(stored), 
+			object_phrase(
+				noun_phrase(
+					det(a), 
+					adjective(big), 
+					noun(box)
+				)
+			), 
+			compound_prop_phrase(
+				proposition(in), 
+				noun_phrase(
+					det(the), 
+					adjective(large), 
+					adjective(empty), 
+					noun(room)
+				), 
+				proposition(after), 
+				noun_phrase(
+					noun(school)
+				)
+			)
+		)
+	)
+) ;
+T = 
+s(
+	noun_phrase(
+		det(the), 
+		adjective(young), 
+		noun(boy)
+	), 
+	verb_phrase(
+		verb(pushed), 
+		conjunction(and), 
+		verb(stored), 
+		object_phrase(
+			noun_phrase(
+				det(a), 
+				adjective(big), 
+				noun(box)
+			)
+		), 
+		compound_prop_phrase(
+			proposition(in), 
+			noun_phrase(
+				det(the), 
+				adjective(large), 
+				adjective(empty), 
+				noun(room)
+			), 
+			proposition(after), 
+			noun_phrase(
+				noun(school)
+			)
+		)
+	)
+) ;
+false.
 
+?- s(T, [the, old, woman, and, the, old, man, gave, the, poor, young, man, a, white, envelope, in, the, shed, behind, the, building], []).
+T = 
+s(
+	anded_noun_phrase(
+		noun_phrase(
+			det(the), 
+			adjective(old), 
+			noun(woman)
+		), 
+		conjunction(and), 
+		noun_phrase(
+			det(the), 
+			adjective(old), 
+			noun(man)
+		)
+	), 
+	verb_phrase(
+		verb(gave), 
+		object_phrase(
+			noun_phrase(
+				det(the), 
+				adjective(poor), 
+				adjective(young), 
+				noun(man)
+			)
+		), 
+		object_phrase(
+			noun_phrase(
+				det(a), 
+				adjective(white), 
+				noun(envelope)
+			)
+		), 
+		compound_prop_phrase(
+			proposition(in), 
+			noun_phrase(
+				det(the), 
+				noun(shed)
+			), 
+			proposition(behind), 
+			noun_phrase(
+				det(the), 
+				noun(building)
+			)
+		)
+	)
+) ;
+false.
+
+?- s(T, [every, boy, quickly, climbed, some, big, tree, and, every, girl, watched, some, boy, whom, she, liked], []).
 T = 
 s(
 	s(
 		noun_phrase(
 			det(every), 
-			noun(boy)), 
+			noun(boy)
+		), 
 		verb_phrase(
-			adverb(quickly), 
+			adverb_phrase(
+				adverb(quickly)
+			), 
 			verb(climbed), 
 			object_phrase(
 				noun_phrase(
@@ -142,7 +191,7 @@ s(
 			)
 		)
 	), 
-	prop(and), 
+	conjunction(and), 
 	s(
 		noun_phrase(
 			det(every), 
@@ -151,24 +200,26 @@ s(
 		verb_phrase(
 			verb(watched), 
 			object_phrase(
-				noun_phrase(det(some), noun(boy)), 
+				noun_phrase(
+					det(some), 
+					noun(boy)
+				), 
 				rel_clause(
 					object_pronoun(whom), 
 					noun_phrase(
 						subject_pronoun(she)
 					), 
-					verb_phrase(
+					short_verb_phrase(
 						verb(liked)
 					)
 				)
 			)
 		)
 	)
-)
+) ;
+false.
 
-Sentence 4
-s(T, [some, brilliant, students, and, many, professors, watched, and, admired, talented, lecturers, and, appreciated, bright, scientists, and, researchers], []).
-
+?- s(T, [some, brilliant, students, and, many, professors, watched, and, admired, talented, lecturers, and, appreciated, bright, scientists, and, researchers], []).
 T = 
 s(
 	anded_noun_phrase(
@@ -177,7 +228,7 @@ s(
 			adjective(brilliant), 
 			noun(students)
 		), 
-		prop(and), 
+		conjunction(and), 
 		noun_phrase(
 			det(many), 
 			noun(professors)
@@ -186,7 +237,7 @@ s(
 	anded_verb_phrase(
 		verb_phrase(
 			verb(watched), 
-			prop(and), 
+			conjunction(and), 
 			verb(admired), 
 			object_phrase(
 				noun_phrase(
@@ -195,7 +246,7 @@ s(
 				)
 			)
 		), 
-		prop(and), 
+		conjunction(and), 
 		verb_phrase(
 			verb(appreciated), 
 			object_phrase(
@@ -204,7 +255,7 @@ s(
 						adjective(bright), 
 						noun(scientists)
 					), 
-					prop(and), 
+					conjunction(and), 
 					noun_phrase(
 						noun(researchers)
 					)
@@ -213,24 +264,8 @@ s(
 		)
 	)
 ) ;
+false.
 
-Sentence 5
-?- s(T, [what, did, professors, do], []).
-T = 
-s(
-	object_question(
-		interrogative_pronoun(what), 
-		flipped_verb_phrase(
-			auxiliary_verb(did), 
-			noun_phrase(
-				noun(professors)
-			), 
-			infinitve_verb(do)
-		)
-	)
-) ;
-
-Sentence 6
 ?- s(T, [who, climbed, the, big, tree], []).
 T = 
 s(
@@ -245,6 +280,22 @@ s(
 					noun(tree)
 				)
 			)
+		)
+	)
+) ;
+false.
+
+?- s(T, [what, did, professors, do], []).
+T = 
+s(
+	object_question(
+		interrogative_pronoun(what), 
+		question_phrase(
+			auxiliary_verb(did), 
+			noun_phrase(
+				noun(professors)
+			), 
+			infinitve_verb(do)
 		)
 	)
 ) ;

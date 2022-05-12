@@ -1,86 +1,113 @@
+s(s(SQ)) --> sq(SQ).
+s(s(OQ)) --> oq(OQ).
 s(S) --> ss(S).
 s(s(S1, conjunction(and), S2)) --> ss(S1), [and], ss(S2).
-ss(s(NP, VP)) --> (np(NP);snp(NP)), bvp(VP).
+ss(s(NP, VP)) --> np(NP), bvp(VP).
 ss(s(NP, VP)) --> anp(NP), bvp(VP).
 
 
-s(s(SQ)) --> sq(SQ).
-s(s(OQ)) --> oq(OQ).
 
-sq(subject_question(IP, VP)) --> ip(IP), vp(VP).
+sq(subject_question(IP, BVP)) --> ip(IP), bvp(BVP).
 oq(object_question(IP, FVP)) --> ip(IP), qp(FVP).
 
-qp(question_phrase(AV, NP, IV)) --> av(AV), (np(NP);snp(NP)), iv(IV) ; av(AV), anp(NP), iv(IV).
-%qp(question_phrase(AV, NP, IV)) --> av(AV), anp(NP), iv(IV).
+qp(question_phrase(AV, NP, IV)) --> 
+	av(AV), np(NP), iv(_, IV) ; 
+	av(AV), anp(NP), iv(_, IV).
+qp(question_phrase(AV, NP, IV, OPH)) --> 
+	av(AV), np(NP), iv(double_object, IV), oph(OPH); 
+	av(AV), anp(NP), iv(double_object, IV), oph(OPH).
+
 
 anp(anded_noun_phrase(NP1, conjunction(and), NP2)) --> np(NP1), [and], np(NP2).
 
-
-np_(noun_phrase(P)) --> sp(P).
+np(noun_phrase(P)) --> sp(P).
 
 np(noun_phrase(D, N)) --> det(X, D), n(X, N).
 np(noun_phrase(D, A, N)) --> det(X, D), adj(A), n(X, N).
 np(noun_phrase(D, A1, A2, N)) --> det(X, D), adj(A1), adj(A2), n(X, N), {A1\==A2}.
-
 np(noun_phrase(N)) --> n(plural, N).
 np(noun_phrase(N)) --> n(uncountable, N).
 np(noun_phrase(A, N)) --> adj(A), n(plural, N).
 np(noun_phrase(A1, A2, N)) --> adj(A1), adj(A2), n(plural, N), {A1\==A2}.
 
-oph(object_phrase(NP, RC)) --> np(NP), rc(RC).
-oph(object_phrase(NP)) --> np(NP).
-oph(object_phrase(NP, RC)) --> anp(NP), rc(RC).
-oph(object_phrase(NP)) --> anp(NP).
+oph(object_phrase(ONP)) --> onp(ONP).
+oph(object_phrase(ONP, RC)) --> onp(ONP), rc(RC).
+oph(object_phrase(AONP)) --> aonp(AONP).
+oph(object_phrase(AONP, RC)) --> aonp(AONP), rc(RC).
 
-rc(rel_clause(W, NP, VP)) --> obp(W), np(NP), vp(VP).
+aonp(anded_noun_phrase(ONP1, conjunction(and), ONP2)) --> onp(ONP1), [and], onp(ONP2).
 
-% base verb phrase
-bvp(VP) --> avp(VP).
-bvp(VP) --> vp(VP).
+onp(noun_phrase(D, N)) --> det(X, D), n(X, N).
+onp(noun_phrase(D, A, N)) --> det(X, D), adj(A), n(X, N).
+onp(noun_phrase(D, A1, A2, N)) --> det(X, D), adj(A1), adj(A2), n(X, N), {A1\==A2}.
+onp(noun_phrase(N)) --> n(plural, N).
+onp(noun_phrase(N)) --> n(uncountable, N).
+onp(noun_phrase(A, N)) --> adj(A), n(plural, N).
+onp(noun_phrase(A1, A2, N)) --> adj(A1), adj(A2), n(plural, N), {A1\==A2}.
+
+rc(rel_clause(W, NP, VP)) --> obp(W), np(NP), sh_vp(VP).
+
+bvp(VP) --> avp(VP); vp(VP).
 
 avp(anded_verb_phrase(VP1, conjunction(and), VP2)) --> vp(VP1), [and], vp(VP2).
 
-vp(verb_phrase(V)) --> v(V).
-vp(verb_phrase(V, NP)) --> v(V), oph(NP).
-vp(verb_phrase(V, NP1, NP2)) --> v(V), oph(NP1), oph(NP2).
-vp(verb_phrase(V, P)) --> v(V), pp(P).
-vp(verb_phrase(V, NP, P)) --> v(V), oph(NP), pp(P).
-vp(verb_phrase(V, NP1, NP2, P)) --> v(V), oph(NP1), oph(NP2), pp(P).
-vp(verb_phrase(A, V)) --> adv(A), v(V).
-vp(verb_phrase(A, V, NP)) --> adv(A), v(V), oph(NP).
-vp(verb_phrase(A, V, NP1, NP2)) --> adv(A), v(V), oph(NP1), oph(NP2).
-vp(verb_phrase(A, V, P)) --> adv(A), v(V), pp(P).
-vp(verb_phrase(A, V, NP, P)) --> adv(A), v(V), oph(NP), pp(P).
-vp(verb_phrase(A, V, NP1, NP2, P)) --> adv(A), v(V), oph(NP1), oph(NP2), pp(P).
+vp(verb_phrase(V)) --> v(_, V).
+vp(verb_phrase(V, OPH)) --> v(_, V), oph(OPH).
+vp(verb_phrase(V, OPH1, OPH2)) --> v(double_object, V), oph(OPH1), oph(OPH2).
+vp(verb_phrase(V, P)) --> v(_, V), pp(P).
+vp(verb_phrase(V, OPH, P)) --> v(_, V), oph(OPH), pp(P).
+vp(verb_phrase(V, OPH1, OPH2, P)) --> v(double_object, V), oph(OPH1), oph(OPH2), pp(P).
+vp(verb_phrase(A, V)) --> adv_ph(A), v(_, V).
+vp(verb_phrase(A, V, OPH)) --> adv_ph(A), v(_, V), oph(OPH).
+vp(verb_phrase(A, V, OPH1, OPH2)) --> adv_ph(A), v(double_object, V), oph(OPH1), oph(OPH2).
+vp(verb_phrase(A, V, P)) --> adv_ph(A), v(_, V), pp(P).
+vp(verb_phrase(A, V, OPH, P)) --> adv_ph(A), v(_, V), oph(OPH), pp(P).
+vp(verb_phrase(A, V, OPH1, OPH2, P)) --> adv_ph(A), v(double_object, V), oph(OPH1), oph(OPH2), pp(P).
+
+vp(verb_phrase(V1, conjunction(and), V2)) --> v(_, V1), [and], v(_, V2), {V1\==V2}.
+vp(verb_phrase(V1, conjunction(and), V2, OPH)) --> v(_, V1), [and], v(_, V2), {V1\==V2}, oph(OPH).
+vp(verb_phrase(V1, conjunction(and), V2, OPH1, OPH2)) --> v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH1), oph(OPH2).
+vp(verb_phrase(V1, conjunction(and), V2, P)) --> v(_, V1), [and], v(_, V2), {V1\==V2}, pp(P).
+vp(verb_phrase(V1, conjunction(and), V2, OPH, P)) --> v(_, V1), [and], v(_, V2), {V1\==V2}, oph(OPH), pp(P).
+vp(verb_phrase(V1, conjunction(and), V2, OPH1, OPH2, P)) --> v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH1), oph(OPH2), pp(P).
+vp(verb_phrase(A, V1, conjunction(and), V2)) --> adv_ph(A), v(_, V1), [and], v(_, V2), {V1\==V2}.
+vp(verb_phrase(A, V1, conjunction(and), V2, OPH)) --> adv_ph(A), v(_, V1), [and], v(_, V2), {V1\==V2}, oph(OPH).
+vp(verb_phrase(A, V1, conjunction(and), V2, OPH1, OPH2)) --> adv_ph(A), v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH1), oph(OPH2).
+vp(verb_phrase(A, V1, conjunction(and), V2, P)) --> adv_ph(A), v(_, V1), [and], v(_, V2), {V1\==V2}, pp(P).
+vp(verb_phrase(A, V1, conjunction(and), V2, OPH, P)) --> adv_ph(A), v(_, V1), [and], v(_, V2), {V1\==V2}, oph(OPH), pp(P).
+vp(verb_phrase(A, V1, conjunction(and), V2, OPH1, OPH2, P)) --> adv_ph(A), v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH1), oph(OPH2), pp(P).
+
+%sh_vp or short_verb_phrase: a verb phrase that comes after "whom" which has one object phrase ommitted when compared to the normal vp or verb_phrase
+% so for a verb that can have two direct objects, the short_verb_phrase can contain up to only one object,
+% while for a verb that can have only up to one direct objects, the short_verb_phrase can not have objects
+sh_vp(short_verb_phrase(V)) --> v(_, V).
+sh_vp(short_verb_phrase(V, P)) --> v(_, V), pp(P).
+sh_vp(short_verb_phrase(V, OPH, P)) --> v(double_object, V), oph(OPH), pp(P).
+sh_vp(short_verb_phrase(A, V)) --> adv_ph(A), v(_, V).
+sh_vp(short_verb_phrase(A, V, OPH)) --> adv_ph(A), v(double_object, V), oph(OPH).
+sh_vp(short_verb_phrase(A, V, P)) --> adv_ph(A), v(_, V), pp(P).
+sh_vp(short_verb_phrase(A, V, OPH, P)) --> adv_ph(A), v(double_object, V), oph(OPH), pp(P).
+
+sh_vp(short_verb_phrase(V1, conjunction(and), V2)) --> v(_, V1), [and], v(_, V2), {V1\==V2}.
+sh_vp(short_verb_phrase(V1, conjunction(and), V2, OPH)) --> v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH).
+sh_vp(short_verb_phrase(V1, conjunction(and), V2, P)) --> v(_, V1), [and], v(_, V2), {V1\==V2}, pp(P).
+sh_vp(short_verb_phrase(V1, conjunction(and), V2, OPH, P)) --> v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH), pp(P).
+sh_vp(short_verb_phrase(A, V1, conjunction(and), V2)) --> adv_ph(A), v(_, V1), [and], v(_, V2), {V1\==V2}.
+sh_vp(short_verb_phrase(A, V1, conjunction(and), V2, OPH)) --> adv_ph(A), v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH).
+sh_vp(short_verb_phrase(A, V1, conjunction(and), V2, P)) --> adv_ph(A), v(_, V1), [and], v(_, V2), {V1\==V2}, pp(P).
+sh_vp(short_verb_phrase(A, V1, conjunction(and), V2, OPH, P)) --> adv_ph(A), v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH), pp(P).
 
 
-vp(verb_phrase(V1, conjunction(and), V2)) --> v(V1), [and], v(V2), {V1\==V2}.
-vp(verb_phrase(V1, conjunction(and), V2, NP)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP).
-vp(verb_phrase(V1, conjunction(and), V2, NP1, NP2)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2).
-vp(verb_phrase(V1, conjunction(and), V2, P)) --> v(V1), [and], v(V2), {V1\==V2}, pp(P).
-vp(verb_phrase(V1, conjunction(and), V2, NP, P)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP), pp(P).
-vp(verb_phrase(V1, conjunction(and), V2, NP1, NP2, P)) --> v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2), pp(P).
-
-vp(verb_phrase(A, V1, conjunction(and), V2)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}.
-vp(verb_phrase(A, V1, conjunction(and), V2, NP)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP).
-vp(verb_phrase(A, V1, conjunction(and), V2, NP1, NP2)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2).
-vp(verb_phrase(A, V1, conjunction(and), V2, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, pp(P).
-vp(verb_phrase(A, V1, conjunction(and), V2, NP, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP), pp(P).
-vp(verb_phrase(A, V1, conjunction(and), V2, NP1, NP2, P)) --> adv(A), v(V1), [and], v(V2), {V1\==V2}, oph(NP1), oph(NP2), pp(P).
+pp(prop_phrase(P, ONP)) --> prop(P), onp(ONP).
+pp(prop_phrase(P, AONP)) --> prop(P), aonp(AONP).
+pp(compound_prop_phrase(P1, ONP1, P2, ONP2)) --> prop(P1), onp(ONP1), prop(P2), onp(ONP2).
+pp(compound_prop_phrase(P1, AONP1, P2, ONP2)) --> prop(P1), aonp(AONP1), prop(P2), onp(ONP2).
+pp(compound_prop_phrase(P1, ONP1, P2, AONP2)) --> prop(P1), onp(ONP1), prop(P2), aonp(AONP2).
+pp(compound_prop_phrase(P1, AONP1, P2, AONP2)) --> prop(P1), aonp(AONP1), prop(P2), aonp(AONP2).
 
 
-%pp(prop_phrase(P, NP)) --> prop(P), np(NP). %TODO: anp?
-%pp(prop_phrase(P, NP)) --> prop(P), n(_, NP).
-%spp(P, NP) --> prop(P), np(NP).
-%spp(P, NP) --> prop(P), n(_, NP).
-
-pp(prop_phrase(P, NP)) --> prop(P), np(NP).
-pp(compound_prop_phrase(P1, NP1, P2, NP2)) --> 
-	prop(P1), np(NP1), prop(P2), np(NP2). %TODO: anp?
-
-
-adv_ph(adv_phrase(A)) --> adv(A).
-adv_ph(A1, conjunction(and), A2) --> adv(A1), [and], adv(A2), {A1\==A2}.
+adv_ph(adverb_phrase(A)) --> adv(A).
+adv_ph(adverb_phrase(A1, conjunction(and), A2)) --> adv(A1), [and], adv(A2), {A1\==A2}.
 
 
 %at least tweny nouns
@@ -110,39 +137,46 @@ n(singular, noun(lecturer)) --> [lecturer].
 n(singular, noun(scientist)) --> [scientist].
 n(singular, noun(researcher)) --> [researcher].
 
+n(singular, noun(thing)) --> [thing].
+n(singular, noun(government)) --> [government].
+n(singular, noun(company)) --> [company].
+n(singular, noun(group)) --> [group].
+n(singular, noun(team)) --> [team].
+
 
 
 
 %at least twenty verbs with past tense or infinitve inflection
-% Here: 3 auxiliary verbs + 13 past verbs + 9 infinitve_verbs = 25 verbs > 20
+% Here:  13 past verbs + 9 infinitve_verbs + 3 auxiliary verbs = 25 verbs > 20
+v(single_object, verb(climbed)) --> [climbed].
+v(single_object, verb(pushed)) --> [pushed].
+v(single_object, verb(liked)) --> [liked].
+v(single_object, verb(stored)) --> [stored].
+v(single_object, verb(watched)) --> [watched].
+v(single_object, verb(admired)) --> [admired].
+v(single_object, verb(appreciated)) --> [appreciated].
+
+v(single_object, verb(fought)) --> [fought].
+v(single_object, verb(loved)) --> [loved].
+v(single_object, verb(saw)) --> [saw].
+v(single_object, verb(heard)) --> [heard].
+v(single_object, verb(noticed)) --> [noticed].
+
+v(double_object, verb(gave)) --> [gave].
+
+iv(single_object, infinitve_verb(do)) --> [do].
+iv(single_object, infinitve_verb(climb)) --> [climb].
+iv(single_object, infinitve_verb(push)) --> [push].
+iv(single_object, infinitve_verb(like)) --> [like].
+iv(single_object, infinitve_verb(store)) --> [store].
+iv(single_object, infinitve_verb(watch)) --> [watch].
+iv(single_object, infinitve_verb(admire)) --> [admire].
+iv(single_object, infinitve_verb(appreciate)) --> [appreciate].
+iv(double_object, infinitve_verb(give)) --> [give].
+
 av(auxiliary_verb(did)) --> [did].
 av(auxiliary_verb(can)) --> [can].
 av(auxiliary_verb(should)) --> [should].
-
-v(verb(climbed)) --> [climbed].
-v(verb(pushed)) --> [pushed].
-v(verb(liked)) --> [liked].
-v(verb(stored)) --> [stored].
-v(verb(gave)) --> [gave].
-v(verb(watched)) --> [watched].
-v(verb(admired)) --> [admired].
-v(verb(appreciated)) --> [appreciated].
-
-v(verb(fought)) --> [fought].
-v(verb(loved)) --> [loved].
-v(verb(saw)) --> [saw].
-v(verb(heard)) --> [heard].
-v(verb(noticed)) --> [noticed].
-
-iv(infinitve_verb(do)) --> [do].
-iv(infinitve_verb(climb)) --> [climb].
-iv(infinitve_verb(push)) --> [push].
-iv(infinitve_verb(like)) --> [like].
-iv(infinitve_verb(store)) --> [store].
-iv(infinitve_verb(girl)) --> [give].
-iv(infinitve_verb(watch)) --> [watch].
-iv(infinitve_verb(admire)) --> [admire].
-iv(infinitve_verb(appreciate)) --> [appreciate].
 
 
 %at least twenty adjectives
@@ -213,9 +247,10 @@ det(singular, det(every)) --> [every].
 det(plural, det(many)) --> [many].
 
 
+sp(subject_pronoun(she)) --> [she].
+
 %the object pronoun “whom”, and the interrogative pronouns “who” and “what”.
 obp(object_pronoun(whom)) --> [whom].
-sp(subject_pronoun(she)) --> [she].
 
 ip(interrogative_pronoun(who)) --> [who].
 ip(interrogative_pronoun(what)) --> [what].
