@@ -5,18 +5,12 @@ s(s(S1, conjunction(and), S2)) --> ss(S1), [and], ss(S2).
 ss(s(NP, VP)) --> np(NP), bvp(VP).
 ss(s(NP, VP)) --> anp(NP), bvp(VP).
 
-
-
 sq(subject_question(IP, BVP)) --> ip(IP), bvp(BVP).
 oq(object_question(IP, FVP)) --> ip(IP), qp(FVP).
 
-qp(question_phrase(AV, NP, IV)) --> 
-	av(AV), np(NP), iv(_, IV) ; 
-	av(AV), anp(NP), iv(_, IV).
-qp(question_phrase(AV, NP, IV, OPH)) --> 
-	av(AV), np(NP), iv(double_object, IV), oph(OPH); 
-	av(AV), anp(NP), iv(double_object, IV), oph(OPH).
-
+qp(question_phrase(AV, NP, IVP)) --> 
+	av(AV), np(NP), sh_ivp(IVP) ; 
+	av(AV), anp(NP), sh_ivp(IVP).
 
 anp(anded_noun_phrase(NP1, conjunction(and), NP2)) --> np(NP1), [and], np(NP2).
 
@@ -96,6 +90,23 @@ sh_vp(short_verb_phrase(A, V1, conjunction(and), V2)) --> adv_ph(A), v(_, V1), [
 sh_vp(short_verb_phrase(A, V1, conjunction(and), V2, OPH)) --> adv_ph(A), v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH).
 sh_vp(short_verb_phrase(A, V1, conjunction(and), V2, P)) --> adv_ph(A), v(_, V1), [and], v(_, V2), {V1\==V2}, pp(P).
 sh_vp(short_verb_phrase(A, V1, conjunction(and), V2, OPH, P)) --> adv_ph(A), v(_, V1), [and], v(double_object, V2), {V1\==V2}, oph(OPH), pp(P).
+
+sh_ivp(short_verb_phrase(IV)) --> iv(_, IV).
+sh_ivp(short_verb_phrase(IV, P)) --> iv(_, IV), pp(P).
+sh_ivp(short_verb_phrase(IV, OPH, P)) --> iv(double_object, IV), oph(OPH), pp(P).
+sh_ivp(short_verb_phrase(A, IV)) --> adv_ph(A), iv(_, IV).
+sh_ivp(short_verb_phrase(A, IV, OPH)) --> adv_ph(A), iv(double_object, IV), oph(OPH).
+sh_ivp(short_verb_phrase(A, IV, P)) --> adv_ph(A), iv(_, IV), pp(P).
+sh_ivp(short_verb_phrase(A, IV, OPH, P)) --> adv_ph(A), iv(double_object, IV), oph(OPH), pp(P).
+
+sh_ivp(short_verb_phrase(IV1, conjunction(and), IV2)) --> iv(_, IV1), [and], iv(_, IV2), {IV1\==IV2}.
+sh_ivp(short_verb_phrase(IV1, conjunction(and), IV2, OPH)) --> iv(_, IV1), [and], iv(double_object, IV2), {IV1\==IV2}, oph(OPH).
+sh_ivp(short_verb_phrase(IV1, conjunction(and), IV2, P)) --> iv(_, IV1), [and], iv(_, IV2), {IV1\==IV2}, pp(P).
+sh_ivp(short_verb_phrase(IV1, conjunction(and), IV2, OPH, P)) --> iv(_, IV1), [and], iv(double_object, IV2), {IV1\==IV2}, oph(OPH), pp(P).
+sh_ivp(short_verb_phrase(A, IV1, conjunction(and), IV2)) --> adv_ph(A), iv(_, IV1), [and], iv(_, IV2), {IV1\==IV2}.
+sh_ivp(short_verb_phrase(A, IV1, conjunction(and), IV2, OPH)) --> adv_ph(A), iv(_, IV1), [and], iv(double_object, IV2), {IV1\==IV2}, oph(OPH).
+sh_ivp(short_verb_phrase(A, IV1, conjunction(and), IV2, P)) --> adv_ph(A), iv(_, IV1), [and], iv(_, IV2), {IV1\==IV2}, pp(P).
+sh_ivp(short_verb_phrase(A, IV1, conjunction(and), IV2, OPH, P)) --> adv_ph(A), iv(_, IV1), [and], iv(double_object, IV2), {IV1\==IV2}, oph(OPH), pp(P).
 
 
 pp(prop_phrase(P, ONP)) --> prop(P), onp(ONP).

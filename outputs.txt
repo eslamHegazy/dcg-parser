@@ -246,7 +246,10 @@ s(
 			noun_phrase(
 				noun(professors)
 			), 
-			infinitve_verb(do)
+			short_verb_phrase(
+				infinitve_verb(do)
+			)
 		)
 	)
 ) ;
+false.
