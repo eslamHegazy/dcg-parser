@@ -1,9 +1,9 @@
-s(s(SQ)) --> sq(SQ).
-s(s(OQ)) --> oq(OQ).
+s(SQ) --> sq(SQ).
+s(OQ) --> oq(OQ).
 s(S) --> ss(S).
-s(s(S1, conjunction(and), S2)) --> ss(S1), [and], ss(S2).
-ss(s(NP, VP)) --> np(NP), bvp(VP).
-ss(s(NP, VP)) --> anp(NP), bvp(VP).
+s(anded_sentence(S1, conjunction(and), S2)) --> ss(S1), [and], ss(S2).
+ss(sentence(NP, VP)) --> np(NP), bvp(VP).
+ss(sentence(NP, VP)) --> anp(NP), bvp(VP).
 
 sq(subject_question(IP, BVP)) --> ip(IP), bvp(BVP).
 oq(object_question(IP, FVP)) --> ip(IP), qp(FVP).
@@ -249,13 +249,13 @@ prop(proposition(without)) --> [without].
 
 %at least five determiners
 % [the, a, some, every, many]
-det(singular, det(the)) --> [the].
-det(plural, det(the)) --> [the].
-det(singular, det(a)) --> [a].
-det(singular, det(some)) --> [some].
-det(plural, det(some)) --> [some].
-det(singular, det(every)) --> [every].
-det(plural, det(many)) --> [many].
+det(singular, determiner(the)) --> [the].
+det(plural, determiner(the)) --> [the].
+det(singular, determiner(a)) --> [a].
+det(singular, determiner(some)) --> [some].
+det(plural, determiner(some)) --> [some].
+det(singular, determiner(every)) --> [every].
+det(plural, determiner(many)) --> [many].
 
 
 sp(subject_pronoun(she)) --> [she].
